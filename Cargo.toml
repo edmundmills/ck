@@ -73,7 +73,7 @@ uuid = { version = "1.23", features = ["v4", "serde"] }
 base64 = "0.22"
 sha2 = "0.10"
 hf-hub = { version = "0.4.3", default-features = false, features = ["ureq"] }
-tokenizers = "0.20.1"
+tokenizers = "0.22.2"
 # Pinned exactly to rc.11. ort 2.0.0-rc.12 made SessionOptionsPointer
 # !Sync, which removes Send+Sync from ort::Error<SessionBuilder> and
 # breaks `?`-conversion into anyhow::Error throughout ck-embed::mixedbread.
