@@ -107,7 +107,9 @@ pub fn create_embedder_for_config(
         "model2vec" => {
             #[cfg(feature = "bundled-models")]
             {
-                return Ok(Box::new(Model2VecEmbedder::new_bundled(config.name.as_str())?));
+                return Ok(Box::new(Model2VecEmbedder::new_bundled(
+                    config.name.as_str(),
+                )?));
             }
             #[cfg(not(feature = "bundled-models"))]
             {

@@ -63,8 +63,8 @@ impl Model2VecEmbedder {
         let num_tokens = input_ids.len();
 
         // Single sequence: offsets is just [0].
-        let input_ids_tensor = Tensor::from_array(([num_tokens], input_ids))
-            .context("build input_ids tensor")?;
+        let input_ids_tensor =
+            Tensor::from_array(([num_tokens], input_ids)).context("build input_ids tensor")?;
         let offsets_tensor =
             Tensor::from_array(([1usize], vec![0i64])).context("build offsets tensor")?;
 

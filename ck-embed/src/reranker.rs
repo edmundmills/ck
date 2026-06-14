@@ -76,7 +76,9 @@ pub fn create_reranker_for_config(
         "local" => {
             #[cfg(feature = "bundled-models")]
             {
-                return Ok(Box::new(crate::local_reranker::LocalReranker::new_bundled()?));
+                return Ok(Box::new(
+                    crate::local_reranker::LocalReranker::new_bundled()?
+                ));
             }
             #[cfg(not(feature = "bundled-models"))]
             {

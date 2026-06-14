@@ -86,8 +86,8 @@ impl Reranker for LocalReranker {
         let shape = [batch_size, MAX_SEQUENCE_LENGTH];
         let input_ids_tensor =
             Tensor::from_array((shape, all_input_ids)).context("build input_ids tensor")?;
-        let attention_mask_tensor =
-            Tensor::from_array((shape, all_attention_mask)).context("build attention_mask tensor")?;
+        let attention_mask_tensor = Tensor::from_array((shape, all_attention_mask))
+            .context("build attention_mask tensor")?;
 
         let outputs = self
             .session
