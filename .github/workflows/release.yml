@@ -128,8 +128,9 @@ jobs:
         run: |
           mkdir -p ck-embed/models
           base="https://huggingface.co/futur/Qwen3-Embedding-0.6B-model2vec-onnx/resolve/main"
-          curl -fL "$base/onnx/model.onnx"  -o ck-embed/models/embedding.onnx
-          curl -fL "$base/tokenizer.json"   -o ck-embed/models/embedding-tokenizer.json
+          # --retry-all-errors so HF 429 (rate-limit) bursts are retried, not fatal.
+          curl -fL --retry 6 --retry-all-errors --retry-delay 15 "$base/onnx/model.onnx" -o ck-embed/models/embedding.onnx
+          curl -fL --retry 6 --retry-all-errors --retry-delay 15 "$base/tokenizer.json" -o ck-embed/models/embedding-tokenizer.json
           ls -lh ck-embed/models/
         shell: bash
 
