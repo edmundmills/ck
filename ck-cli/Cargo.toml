@@ -63,9 +63,11 @@ dirs = "5.0"
 libc = "0.2"
 
 [features]
-default = ["fastembed", "mixedbread"]
+default = ["fastembed", "mixedbread", "bundled-models"]
 fastembed = ["ck-embed/fastembed", "ck-index/fastembed", "ck-engine/fastembed", "ck-chunk/fastembed", "ck-tui/fastembed"]
 mixedbread = ["ck-embed/mixedbread", "ck-index/mixedbread", "ck-engine/mixedbread", "ck-chunk/mixedbread", "ck-tui/mixedbread"]
+# Local ONNX providers (model2vec embedder + Jina reranker), bundled offline.
+bundled-models = ["ck-embed/bundled-models"]
 vendored-openssl = ["openssl?/vendored"]
 
 [dev-dependencies]

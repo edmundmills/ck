@@ -80,9 +80,23 @@ impl Default for ModelRegistry {
             },
         );
 
+        // Local model2vec embedder (Qwen3-Embedding-0.6B-model2vec-onnx),
+        // bundled into the binary for fully offline use. Default for this fork.
+        models.insert(
+            "qwen3-model2vec".to_string(),
+            ModelConfig {
+                name: "qwen3-model2vec".to_string(),
+                provider: "model2vec".to_string(),
+                dimensions: 256,
+                max_tokens: 512,
+                description: "Qwen3 model2vec static embeddings (256 dims, bundled, offline)"
+                    .to_string(),
+            },
+        );
+
         Self {
             models,
-            default_model: "bge-small".to_string(), // Keep BGE as default for backward compatibility
+            default_model: "qwen3-model2vec".to_string(),
         }
     }
 }
@@ -203,9 +217,20 @@ impl Default for RerankModelRegistry {
             },
         );
 
+        // Local Jina-Reranker-Tiny cross-encoder, bundled for offline use.
+        // Default for this fork.
+        models.insert(
+            "jina-tiny-local".to_string(),
+            RerankModelConfig {
+                name: "jina-tiny-local".to_string(),
+                provider: "local".to_string(),
+                description: "Jina-Reranker-Tiny cross-encoder (bundled, offline)".to_string(),
+            },
+        );
+
         Self {
             models,
-            default_model: "jina".to_string(),
+            default_model: "jina-tiny-local".to_string(),
         }
     }
 }

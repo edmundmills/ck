@@ -19,6 +19,13 @@ mod mixedbread;
 #[cfg(feature = "mixedbread")]
 use mixedbread::MixedbreadEmbedder;
 
+#[cfg(feature = "model2vec")]
+mod model2vec;
+#[cfg(feature = "model2vec")]
+use model2vec::Model2VecEmbedder;
+#[cfg(feature = "model2vec")]
+mod local_reranker;
+
 pub trait Embedder: Send + Sync {
     fn id(&self) -> &'static str;
     fn dim(&self) -> usize;
@@ -93,6 +100,19 @@ pub fn create_embedder_for_config(
             {
                 bail!(
                     "Model '{}' requires the `mixedbread` feature. Rebuild ck with Mixedbread support.",
+                    config.name
+                );
+            }
+        }
+        "model2vec" => {
+            #[cfg(feature = "bundled-models")]
+            {
+                return Ok(Box::new(Model2VecEmbedder::new_bundled(config.name.as_str())?));
+            }
+            #[cfg(not(feature = "bundled-models"))]
+            {
+                bail!(
+                    "Model '{}' requires the `bundled-models` feature. Rebuild ck with bundled models.",
                     config.name
                 );
             }

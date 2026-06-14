@@ -25,9 +25,10 @@ ort = { workspace = true, optional = true }
 once_cell = { workspace = true, optional = true }
 ndarray = { workspace = true, optional = true }
 num_cpus = { workspace = true, optional = true }
+half = { workspace = true, optional = true }
 
 [features]
-default = ["fastembed", "mixedbread"]
+default = ["fastembed", "mixedbread", "model2vec", "bundled-models"]
 fastembed = ["dep:fastembed"]
 mixedbread = [
     "dep:hf-hub",
@@ -37,3 +38,8 @@ mixedbread = [
     "dep:ndarray",
     "dep:num_cpus",
 ]
+# Local ONNX providers ported from brightworker/org-store: the Qwen3
+# model2vec embedder and the Jina-Reranker-Tiny cross-encoder.
+model2vec = ["dep:ort", "dep:tokenizers", "dep:half"]
+# Embed the model/tokenizer blobs into the binary for fully offline use.
+bundled-models = ["model2vec"]
