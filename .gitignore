@@ -40,3 +40,9 @@ docs/tasks
 dist/
 node_modules/
 package-lock.json
+
+# Embedding model blobs are fetched from HuggingFace by CI at release time
+# (futur/Qwen3-Embedding-0.6B-model2vec-onnx). The reranker is checked in
+# directly (small, no clean canonical source).
+ck-embed/models/embedding.onnx
+ck-embed/models/embedding-tokenizer.json
