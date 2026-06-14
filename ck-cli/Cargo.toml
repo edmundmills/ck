@@ -72,4 +72,4 @@ vendored-openssl = ["openssl?/vendored"]
 
 [dev-dependencies]
 tempfile = { workspace = true }
-serial_test = "2.0"
+serial_test = "3.5"
