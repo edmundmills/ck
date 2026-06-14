@@ -117,7 +117,22 @@ jobs:
             echo "CARGO_CMD=cargo" >> $GITHUB_ENV
           fi
         shell: bash
-      
+
+      # The `bundled-models` feature (on by default) embeds the embedding model
+      # via include_bytes!. The Jina reranker is checked into the repo; the
+      # larger Qwen3 model2vec embedding model is fetched here. Only the
+      # default-feature builds (Linux + macOS ARM) compile bundled-models; the
+      # --no-default-features builds (Windows, macOS x86) skip it.
+      - name: Fetch bundled embedding model
+        if: matrix.os == 'ubuntu-latest' || (matrix.os == 'macos-latest' && matrix.target == 'aarch64-apple-darwin')
+        run: |
+          mkdir -p ck-embed/models
+          base="https://huggingface.co/futur/Qwen3-Embedding-0.6B-model2vec-onnx/resolve/main"
+          curl -fL "$base/onnx/model.onnx"  -o ck-embed/models/embedding.onnx
+          curl -fL "$base/tokenizer.json"   -o ck-embed/models/embedding-tokenizer.json
+          ls -lh ck-embed/models/
+        shell: bash
+
       - name: Build release binary
         env:
           # For Windows and macOS builds, disable vendored OpenSSL to use system libraries
